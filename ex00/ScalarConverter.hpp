@@ -2,6 +2,7 @@
 #define SCALARCONVERTER_HPP
 
 #include <string>
+#include <iostream>
 
 class ScalarConverter
 {
@@ -12,8 +13,11 @@ class ScalarConverter
 		~ScalarConverter(void) = delete;
 
 		static void convert(std::string& literal);
-	private:
 
+		class InvalidException : public std::exception
+		{
+			const char* what() const noexcept override;
+		};
 
 };
 

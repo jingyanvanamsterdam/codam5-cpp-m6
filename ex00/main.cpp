@@ -11,7 +11,14 @@ int main(int argc, char *argv[])
 	}
 
 	std::string lit(argv[1]);
-	ScalarConverter::convert(lit);
-
+	try
+	{
+		ScalarConverter::convert(lit);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	
 	return (0);
 }
