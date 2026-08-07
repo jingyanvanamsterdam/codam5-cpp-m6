@@ -28,21 +28,25 @@ static void	cast_char(std::string& lit)
 }
 static void	cast_to_int(double nb)
 {
-	if (!std::isfinite(nb) || std::trunc(nb) != nb
+	if (!std::isfinite(nb)
 		|| nb < std::numeric_limits<int>::min() 
 		|| nb > std::numeric_limits<int>::max())
+	{
 		std::cout << "int: impossible" << std::endl;
-	else
-		std::cout << "int: " << static_cast<int>(nb) << std::endl;
+		return ;
+	}
+	nb = std::trunc(nb);	
+	std::cout << "int: " << static_cast<int>(nb) << std::endl;
 }
 static void	cast_to_float(double nb)
 {
-	if (nb < std::numeric_limits<float>::lowest() || nb > std::numeric_limits<float>::max())
+	if (nb < std::numeric_limits<float>::lowest() 
+		|| nb > std::numeric_limits<float>::max())
 	{
 		std::cout << "float: impossible" << std::endl;
 		return ;
 	}
-		
+
 	if (std::trunc(nb) == nb)
 		std::cout << std::fixed << std::setprecision(1);
 	std::cout << "float: " << static_cast<float>(nb) << "f" << std::endl;	
@@ -94,8 +98,7 @@ std::string parse_input(std::string& literal)
 void	ScalarConverter::convert(std::string& literal)
 {
 	literal = parse_input(literal);
-	//std::cout <<  literal << std::endl;
-
+	
 	if (is_edge_case(literal))
 		return ;
 	

@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	float f_res = static_cast<float>(res);
 	double d_res = static_cast<double>(res);
 	
-	long temp = std::stol(lit);
+	double temp = std::stod(lit);
 	std::cout << "temp: " << temp << std::endl;
 
 	std::cout << "char: ";
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	else
 		std::cout << static_cast<int>(temp) << std::endl;
 	
-	std::cout << std::fixed << std::setprecision(1);
+	std::cout << std::setprecision(20);
 	std::cout << "float: " << static_cast<float>(temp) << 'f' << std::endl;
 	std::cout << "double: " << static_cast<double>(temp) << std::endl;
 }
