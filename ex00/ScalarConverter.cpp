@@ -35,22 +35,34 @@ static void	cast_to_int(double nb)
 		std::cout << "int: impossible" << std::endl;
 		return ;
 	}
-	nb = std::trunc(nb);	
-	std::cout << "int: " << static_cast<int>(nb) << std::endl;
+	std::cout << "int: ";
+	if (std::signbit(nb) && nb == -0.0)
+		std::cout << "-";
+	std::cout << static_cast<int>(nb) << std::endl;
 }
 static void	cast_to_float(double nb)
 {
-	if (nb < std::numeric_limits<float>::lowest() 
-		|| nb > std::numeric_limits<float>::max())
+	if (std::isfinite(nb)
+		&& (nb < std::numeric_limits<float>::lowest() 
+		|| nb > std::numeric_limits<float>::max()))
 	{
 		std::cout << "float: impossible" << std::endl;
 		return ;
 	}
-
-	if (std::trunc(nb) == nb)
-		std::cout << std::fixed << std::setprecision(1);
-	std::cout << "float: " << static_cast<float>(nb) << "f" << std::endl;	
+	float f = static_cast<float>(nb);
+	std::cout << "float: " << f;
+	if (std::isfinite(f) && std::trunc(f) == f)
+		std::cout << ".0";
+	std::cout << "f" << std::endl;	
 		
+}
+
+static void cast_to_double(double nb)
+{
+	std::cout << "double: " << nb;
+	if (std::isfinite(nb) && std::trunc(nb) == nb)
+		std::cout << ".0";
+	std::cout << std::endl;
 }
 
 bool	is_edge_case(std::string& literal)
@@ -95,6 +107,8 @@ std::string parse_input(std::string& literal)
 	return (literal.substr(start, end - start + 1));
 }
 
+
+
 void	ScalarConverter::convert(std::string& literal)
 {
 	literal = parse_input(literal);
@@ -102,7 +116,7 @@ void	ScalarConverter::convert(std::string& literal)
 	if (is_edge_case(literal))
 		return ;
 	
-	if (literal.length() == 1 && !isdigit(literal[0]))
+	if (literal.length() == 1 && !isdigit(static_cast<unsigned char>(literal[0])))
 		return (cast_char(literal));
 	try 
 	{
@@ -114,13 +128,11 @@ void	ScalarConverter::convert(std::string& literal)
 		cast_to_char(nb);
 		cast_to_int(nb);
 		cast_to_float(nb);
-		if (std::trunc(nb) == nb)
-			std::cout << std::fixed << std::setprecision(1);
-		std::cout << "double: " << nb << std::endl;
+		cast_to_double(nb);
 	}
 	catch (const std::out_of_range& e)
 	{
-		std::cout << "Number overflow for double" << std::endl;
+		std::cout << "Number out of range for double" << std::endl;
 	}
 	catch (const std::exception& e)
 	{
