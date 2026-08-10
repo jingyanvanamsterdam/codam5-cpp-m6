@@ -10,8 +10,8 @@ class Data;
 class Serializer
 {
 	public:
-		static std::uintptr_t serialize(Data* ptr);
-		static Data* desrialize(std::uintptr_t raw);
+		static uintptr_t serialize(Data* ptr);
+		static Data* desrialize(uintptr_t raw);
 
 	private:
 		Serializer(void);

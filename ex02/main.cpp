@@ -37,17 +37,17 @@ Base* generate(void)
 void	identify(Base* p)
 {
 
-	if (dynamic_cast<A*>(p))
+	if (dynamic_cast<A*>(p) != nullptr)
 		std::cout << "type is: A" << std::endl;
-	else if (dynamic_cast<B*>(p))
+	else if (dynamic_cast<B*>(p) != nullptr)
 		std::cout << "type is: B" << std::endl;
-	else if (dynamic_cast<C*>(p))
+	else if (dynamic_cast<C*>(p) != nullptr)
 		std::cout << "type is: C" << std::endl;
 	else
 		std::cout << "identify: unknown type" << std::endl;
 }
 
-void	identify_r(Base& p)
+void	identify(Base& p)
 {
 	try
 	{
@@ -90,14 +90,14 @@ int main(void)
 		{
 			Base* test = generate();
 			identify(test);
-			identify_r(*test);
+			identify(*test);
 			delete test;
 		}
 		else
 		{
 			Base* unknow = new Test();
 			identify(unknow);
-			identify_r(*unknow);
+			identify(*unknow);
 			delete unknow;
 		}
 	}
